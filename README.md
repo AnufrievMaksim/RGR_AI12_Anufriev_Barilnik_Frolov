@@ -1,0 +1,1 @@
+# RGR_AI12_Anufriev_Barilnik_Frolov
