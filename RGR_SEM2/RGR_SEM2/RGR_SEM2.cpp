@@ -24,6 +24,9 @@ int main()
     cout << "3 - шифр с кодовым словом\n";
     int tip = 0;
     cin >> tip;
+    
+    
+    
     if (tip == 1) {
         // цезарь
         SetConsoleCP(1251);
@@ -50,10 +53,6 @@ int main()
         cout << "Полученное закодированное сообщение:\n" << endl;
         cout << message << endl;
         return 0;
-
-
-
-
     }
 
 
