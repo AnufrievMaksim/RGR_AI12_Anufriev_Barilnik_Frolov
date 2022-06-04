@@ -48,7 +48,7 @@ int main()
         for (int i = 0; message[i]; ++i)
         {
             char* dlina = find(begin, end, message[i]);  //begin первый, end последний, сравниваются с message
-            if (dlina != end) message[i] = *(begin + (dlina - begin + k) % sizeof(ABC));
+            if (dlina != end) message[i] = *(begin + (dlina - begin + k) % sizeof(ABC)); //по формуле шифра цезаря y = x + k%n
         }
         cout << "Полученное закодированное сообщение:\n" << endl;
         cout << message << endl;
