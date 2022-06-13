@@ -1,0 +1,316 @@
+#include <iostream>
+#include <string>
+#include <Windows.h>
+#include <algorithm>
+
+using namespace std;
+int main ()
+{
+    setlocale(LC_ALL, R"(Russian)");
+    string  parol = "1";
+    string vvod;
+    cout << "Введите пароль\n";
+    cin >> vvod;
+    if (vvod == parol) {
+
+    }
+    else {
+        return 0;
+    }
+    cout << "Введите тип шифра\n";
+    cout << "1 - шифр Цезаря\n";
+    cout << "2 - шифр Атбаш\n";
+    cout << "3 - шифр Шифр Вижинера (для латинских букв)\n";
+    cout << "4 - шифр Шифр Вижинера (для русских букв)\n";
+    int tip = 0;
+    cin >> tip;
+
+
+
+    if (tip == 1) {
+        // цезарь
+        SetConsoleCP(1251);
+        SetConsoleOutputCP(1251);
+        int k;  //k - сдвиг
+        char ABC[] = { 'А','Б','В','Г','Д','Е','Ж','З','И',
+                    'Й','К','Л','М','Н','О','П','Р','С',
+                    'Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ',
+                    'Ы','Ь','Э','Ю','Я','_','.',',','0',
+                    '1','2','3','4','5','6','7','8','9' };
+        char message[80];
+        cout << "Введите сообщение, которое будет закодировано:\n" << endl;
+        cin >> message;
+        cout << "Введите сдвиг:\n" << endl;
+        cin >> k;
+        cout << endl;
+        char* begin = ABC;    //*указатель
+        char* end = ABC + sizeof(ABC);  //возращает размер в байтах
+        for (int i = 0; message[i]; ++i)
+        {
+            char* dlina = find(begin, end, message[i]);  //begin первый, end последний, сравниваются с message
+            if (dlina != end) message[i] = *(begin + (dlina - begin + k) % sizeof(ABC)); //по формуле шифра цезаря y = x + k%n
+        }
+        cout << "Полученное закодированное сообщение:\n" << endl;
+        cout << message << endl;
+        return 0;
+    }
+
+
+
+
+    if (tip == 2) {
+        //атбаш
+        void cipherEncryption();
+        void cipherDecryption();
+        setlocale(LC_ALL, "Russian");
+        SetConsoleCP(1251);
+        SetConsoleOutputCP(1251);
+        int choice;
+        cout << "1. Шифрование\n2. Дешифрование\nВыбери 1 или 2: ";
+        cin >> choice;
+        cin.ignore(); //функция, которая считывает символ и игнорирует его
+
+        if (choice == 1) {
+            cout << "Шифрование" << endl;
+            cipherEncryption();
+        }
+        else if (choice == 2) {
+            cout << "Дешифрование" << endl;
+            cipherDecryption();
+        }
+        else {
+            cout << "Выберите 1 или 2" << endl;
+        }
+        return 0;
+    }
+
+
+
+
+
+    if (tip == 3) {
+        //шифр Виженера для латинского алфавита
+        cout << " шифр Виженера для латинского алфавита ";
+        string B, C, D = "";
+        string A = "abcdefghijklmnopqrstuvwxyz"; // для латинского алфавита 
+        setlocale(LC_ALL, "Rus");
+        cout << "Введите слово: ";
+        cin >> B;
+        cout << "Введите ключ: ";
+        cin >> C;
+        int* F = new int[B.size()];
+        int* G = new int[B.size()];
+        int c = C.size(); //делаем замену переменных для удобства
+        int b = B.size();
+        //Первое условие. Если длина вводимого слова больше, либо равна длине ключа
+        if (b >= c)
+        {
+            for (int i = 0; i < (b / c); i++)
+            {
+                D = D + C; //Записываеncя ключ по всей длине слова.
+            }
+            for (int j = 0; j < (b % c); j++)
+            {
+                D = D + C[j];
+            }
+        }
+        else  //Иначе если ключ длиннее слова, укорачиваем ключ до длины слова.
+        {
+            for (int s = 0; s < b; s++)
+            {
+                D = D + B[s];
+            }
+        }
+
+        for (int k = 0; k < b; k++)
+        {
+            for (int n = 0; n < 26; n++)
+            {
+                if (B[k] == A[n])
+                {
+                    F[k] = n;
+                }
+
+                if (D[k] == A[n])
+                {
+                    G[k] = n;
+                } //Шифровка: находится номер буквы во вводимом ключе и номере, а после чего они записываются их в массив
+
+            }
+        }
+
+        int e = 0; //Для суммы номеров символов. Чтобы при достижении 26 буквы, программа шла по кругу, начиная с первого номера
+        bool shifr;
+        cout << "для шифрования введите 1, для расшифровки нажмите 0: ";
+        cin >> shifr;
+        if (shifr) {
+            for (int u = 0; u < b; u++)
+            {
+                e = ((F[u] + G[u]) % 26);
+                B[u] = A[e];
+            }
+        }
+        else
+            for (int u = 0; u < b; u++)
+            {
+                e = ((F[u] - G[u]));
+                if (e < 0)
+                    e += 26;
+                B[u] = A[e];
+            }
+        cout << "Зашифрованное слово: " << B << endl;
+
+
+       
+        return 0;
+
+    }
+    if (tip == 4) {
+       //  шифр Шифр Вижинера (для русских букв)\n";
+        cout << " шифр Шифр Вижинера(для русских букв)\n";
+            SetConsoleCP(1251);
+        SetConsoleOutputCP(1251);
+        string B, C, D = "";
+        string A = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"; // алфавит 
+        setlocale(LC_ALL, "Rus");
+        cout << "Введите слово: ";
+        cin >> B;
+        cout << "Введите ключ: ";
+        cin >> C;
+        int* F = new int[B.size()];
+        int* G = new int[B.size()];
+        int c = C.size(); //делаем замену переменных для удобства
+        int b = B.size();
+        //Первое условие. Если длина вводимого слова больше, либо равна длине ключа
+        if (b >= c)
+        {
+            for (int i = 0; i < (b / c); i++)
+            {
+                D = D + C; //Записываеncя ключ по всей длине слова.
+            }
+            for (int j = 0; j < (b % c); j++)
+            {
+                D = D + C[j];
+            }
+        }
+        else  //Иначе если ключ длиннее слова, укорачиваем ключ до длины слова.
+        {
+            for (int s = 0; s < b; s++)
+            {
+                D = D + B[s];
+            }
+        }
+
+        for (int k = 0; k < b; k++)
+        {
+            for (int n = 0; n < 33; n++)
+            {
+                if (B[k] == A[n])
+                {
+                    F[k] = n;
+                }
+
+                if (D[k] == A[n])
+                {
+                    G[k] = n;
+                } //Шифровка: находится номер буквы во вводимом ключе и номере, а после чего они записываются их в массив
+
+            }
+        }
+
+        int e = 0; //Для суммы номеров символов. Чтобы при достижении 33 буквы, программа шла по кругу, начиная с первого номера
+        bool shifr;
+        cout << "для шифрования введите 1, для расшифровки нажмите 0: ";
+        cin >> shifr;
+        if (shifr) {
+            for (int u = 0; u < b; u++)
+            {
+                e = ((F[u] + G[u]) % 33);
+                B[u] = A[e];
+            }
+        }
+        else
+            for (int u = 0; u < b; u++)
+            {
+                e = ((F[u] - G[u]));
+                if (e < 0)
+                    e += 33;
+                B[u] = A[e];
+            }
+        cout << "Зашифрованное слово: " << B << endl;
+
+
+
+        return 0;
+
+    }
+}
+    
+
+
+
+
+void cipherEncryption() {
+    setlocale(LC_ALL, "Russian");
+    string message;
+    cout << "Введите сообщение: ";
+    getline(cin, message); //Функция getline предназначена для ввода данных из потока, например, для ввода данных из консольного окна
+
+    for (int i = 0; i < message.length(); i++) {
+        message[i] = toupper(message[i]);
+    }
+
+    string alpa = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+    string reverseAlpa = ""; // изменение строкиили полное переворачивание строки означает изменение порядка символов в ней, так что она читается назад.
+    for (int i = alpa.length() - 1; i > -1; i--) {
+        reverseAlpa += alpa[i];
+    }
+
+    string encryText = "";
+    for (int i = 0; i < message.length(); i++) {
+
+        for (int j = 0; j < alpa.length(); j++) {
+            if (message[i] == alpa[j]) {
+                encryText += reverseAlpa[j];
+                break;
+            }
+        }
+    }
+    cout << encryText;
+}
+
+void cipherDecryption() {
+
+    string message;
+    cout << "Введите зашифрованное сообщение: ";
+    getline(cin, message);
+
+    for (int i = 0; i < message.length(); i++) {
+        message[i] = toupper(message[i]);
+    }
+
+    string alpa = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+    string reverseAlpa = "";
+    for (int i = alpa.length() - 1; i > -1; i--) {
+        reverseAlpa += alpa[i];
+    }
+
+    string dencryText = "";
+    for (int i = 0; i < message.length(); i++) {
+        if (message[i] == 32) {
+            dencryText += " ";
+        }
+        else {
+            for (int j = 0; j < reverseAlpa.length(); j++) {
+                if (message[i] == reverseAlpa[j]) {
+                    dencryText += alpa[j];
+                    break;
+                }
+            }
+        }
+    }
+
+    cout << "Дешифрованное сообщение: " << dencryText;
+}
+
+
